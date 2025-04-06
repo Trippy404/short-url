@@ -8,14 +8,19 @@ async function handelGenetateNewShortURL(req, res) {
       message: "URL is required",
     });
   }
-  const shortId = shortid(8);
+  const shortId = shortid();
+
+
   await URL.create({
     shortId,
     redirectUrl: body.url,
     visitHistory: [],
+    createdBy: req.user._id,
   });
 
-  return res.json({ id: shortId });
+  return res.render("home",{
+    id:shortId
+  });
 }
 
 module.exports = {
